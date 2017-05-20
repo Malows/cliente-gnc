@@ -7,7 +7,7 @@
         <!-- logo for regular state and mobile devices -->
         <div class="logo-lg">
           <img src="/static/img/copilot-logo-white.svg" alt="Logo" class="img-responsive">
-          <span>CoPilot</span>
+          <span>GNC</span>
         </div>
       </a>
 
@@ -119,9 +119,9 @@
             <li class="dropdown user user-menu">
               <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
                 <!-- The user image in the navbar-->
-                <img v-bind:src="demo.avatar" class="user-image" alt="User Image">
+                <img v-bind:src="userAvatar" class="user-image" alt="User Image">
                 <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                <span class="hidden-xs">{{ demo.displayName }}</span>
+                <span class="hidden-xs">{{ user.name }}</span>
               </a>
             </li>
           </ul>
@@ -129,8 +129,8 @@
       </nav>
     </header>
     <!-- Left side column. contains the logo and sidebar -->
-    <sidebar :display-name="demo.displayName"
-             :picture-url="demo.avatar" />
+    <sidebar :display-name="user.name"
+             :picture-url="userAvatar" />
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
@@ -152,7 +152,12 @@
 
     <!-- Main Footer -->
     <footer class="main-footer">
-      <strong>Copyright &copy; {{year}} <a href="javascript:;">CoPilot</a>.</strong> All rights reserved.
+      <!-- Default to the right -->
+      <div class="pull-right">
+        <p class="text-muted"><i class="fa fa-code text-success"></i> con <i class="fa fa-heart-o text-danger"></i> en Santa Fe, Argentina</p>
+      </div>
+      <!-- Default to the left -->
+      <p class="text-muted">La Asistencia Inmediata nos permite mejorar la plataforma <i class="fa fa-hand-spock-o text-primary"></i></p>
     </footer>
   </div>
   <!-- ./wrapper -->
@@ -160,7 +165,7 @@
 
 <script>
 import faker from 'faker'
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 import config from '../config'
 import Sidebar from './Sidebar'
 import 'hideseek'
@@ -183,7 +188,11 @@ export default {
   },
   computed: {
     ...mapState([
+      'user',
       'userInfo'
+    ]),
+    ...mapGetters([
+      'userAvatar'
     ]),
     demo () {
       return {

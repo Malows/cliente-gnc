@@ -28,7 +28,9 @@
 </template>
 
 <script>
-import api from '../api'
+// import api from '../api'
+import { AUTH_URL, URL, clientId, clientSecret } from '@/env'
+import axios from 'axios'
 
 export default {
   name: 'Login',
@@ -43,52 +45,80 @@ export default {
   },
   methods: {
     checkCreds () {
-      const {username, password} = this
-
       this.toggleLoading()
       this.resetResponse()
       this.$store.commit('TOGGLE_LOADING')
 
       /* Making API call to authenticate a user */
-      api.request('post', '/login', {username, password})
+      const postData = {
+        grant_type: 'password',
+        client_id: clientId,
+        client_secret: clientSecret,
+        username: this.username,
+        password: this.password,
+        scope: ''
+      }
+
+      const data = {}
+
+      axios.post(AUTH_URL, postData)
       .then(response => {
         this.toggleLoading()
-
-        var data = response.data
+        data.tokens = response.data
         /* Checking if error object was returned from the server */
-        if (data.error) {
-          var errorName = data.error.name
+        if (data.tokens.error) {
+          var errorName = data.tokens.error.name
           if (errorName) {
             this.response = errorName === 'InvalidCredentialsError'
-            ? 'Username/Password incorrect. Please try again.'
+            ? 'Usuario/Contraseña incorrectos. Por favor intente de nuevo.'
             : errorName
           } else {
-            this.response = data.error
+            this.response = data.tokens.error
           }
-
           return
         }
 
-        /* Setting user in the state and caching record to the localStorage */
-        if (data.user) {
-          var token = 'Bearer ' + data.token
-
-          this.$store.commit('SET_USER', data.user)
-          this.$store.commit('SET_TOKEN', token)
-
-          if (window.localStorage) {
-            window.localStorage.setItem('user', JSON.stringify(data.user))
-            window.localStorage.setItem('token', token)
-          }
-
-          this.$router.push(data.redirect)
+        var header = {
+          'Accept': 'application/json',
+          'Authorization': `${data.tokens.token_type} ${data.tokens.access_token}`
         }
+
+        axios.get(URL + '/api/user', {headers: header})
+        .then(response => {
+          data.user = response.data
+          console.log(data.user)
+          /* Setting user in the state and caching record to the localStorage */
+          if (data.user) {
+            // Chequeo si esta habilitada la cuenta
+            if (!data.user.habilitado) {
+              this.response = 'Su cuenta se encuentra actualmente deshabilitada, consulte con un administrador.'
+              this.$store.commit('SET_USER', null)
+              this.$store.commit('SET_TOKEN', null)
+              window.localStorage.removeItem('user')
+              window.localStorage.removeItem('token')
+              window.localStorage.removeItem('authTokens')
+              return
+            }
+            var token = `${data.tokens.token_type} ${data.tokens.access_token}`
+
+            this.$store.commit('SET_USER', data.user)
+            this.$store.commit('SET_TOKEN', token)
+
+            if (window.localStorage) {
+              window.localStorage.setItem('user', JSON.stringify(data.user))
+              window.localStorage.setItem('token', token)
+              window.localStorage.setItem('authTokens', JSON.stringify(data.tokens))
+            }
+
+            this.$router.push({name: 'Dashboard'})
+          }
+        })
       })
       .catch(error => {
         this.$store.commit('TOGGLE_LOADING')
         console.log(error)
 
-        this.response = 'Server appears to be offline'
+        this.response = 'El servidor parece estar fuera de línea'
         this.toggleLoading()
       })
     },

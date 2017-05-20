@@ -1,0 +1,5 @@
+export const URL = ''
+export const API_URL = URL + ''
+export const AUTH_URL = URL + ''
+export const client_id = ''
+export const client_secret = ''

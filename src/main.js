@@ -16,6 +16,7 @@ import 'font-awesome/css/font-awesome.css'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'admin-lte/dist/css/AdminLTE.css'
 import 'admin-lte/dist/css/skins/skin-blue.css'
+import '../static/css/my-style.css'
 
 // Import Install and register helper items
 Vue.filter('count', count)
