@@ -14,14 +14,7 @@
     },
     methods: {
       logout () {
-        this.$store.commit('SET_USER', null)
-        this.$store.commit('SET_TOKEN', null)
-
-        if (window.localStorage) {
-          window.localStorage.setItem('user', null)
-          window.localStorage.setItem('token', null)
-        }
-
+        this.$store.dispatch('LOGOUT_USER')
         this.$router.push('/login')
       }
     }

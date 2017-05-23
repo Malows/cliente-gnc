@@ -119,7 +119,7 @@
             <li class="dropdown user user-menu">
               <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
                 <!-- The user image in the navbar-->
-                <img v-bind:src="userAvatar" class="user-image" alt="User Image">
+                <img v-bind:src="user.avatar" class="user-image" alt="User Image">
                 <!-- hidden-xs hides the username on small devices so only the image appears. -->
                 <span class="hidden-xs">{{ user.name }}</span>
               </a>
@@ -130,7 +130,7 @@
     </header>
     <!-- Left side column. contains the logo and sidebar -->
     <sidebar :display-name="user.name"
-             :picture-url="userAvatar" />
+             :picture-url="user.avatar" />
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
@@ -142,7 +142,7 @@
         </h1>
         <ol class="breadcrumb">
           <li><a href="javascript:;"><i class="fa fa-home"></i>Home</a></li>
-          <li class="active">{{$route.name.toUpperCase()}}</li>
+          <li class="active">{{$route.name}}</li>
         </ol>
       </section>
 
@@ -164,8 +164,7 @@
 </template>
 
 <script>
-import faker from 'faker'
-import { mapState, mapGetters } from 'vuex'
+import { mapState } from 'vuex'
 import config from '../config'
 import Sidebar from './Sidebar'
 import 'hideseek'
@@ -177,8 +176,7 @@ export default {
   },
   data: function () {
     return {
-      // section: 'Dash',
-      year: new Date().getFullYear(),
+      section: 'Dash',
       classes: {
         fixed_layout: config.fixedLayout,
         hide_logo: config.hideLogoOnMobile
@@ -190,18 +188,7 @@ export default {
     ...mapState([
       'user',
       'userInfo'
-    ]),
-    ...mapGetters([
-      'userAvatar'
-    ]),
-    demo () {
-      return {
-        displayName: faker.name.findName(),
-        avatar: faker.image.avatar(),
-        email: faker.internet.email(),
-        randomCard: faker.helpers.createCard()
-      }
-    }
+    ])
   },
   methods: {
     changeloading () {

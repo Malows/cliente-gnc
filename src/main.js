@@ -38,22 +38,19 @@ var router = new VueRouter({
 // Some middleware to help us ensure the user is authenticated.
 router.beforeEach((to, from, next) => {
   // window.console.log('Transition', transition)
-  if (to.auth && (to.router.app.$store.state.token === 'null')) {
-    window.console.log('Not authenticated')
-    next({
-      path: '/login',
-      query: { redirect: to.fullPath }
-    })
-  } else {
-    next()
+  if (to.meta.requireAuth) {
+    if (window.localStorage.getItem('user') === null || window.localStorage.getItem('token') === null) {
+      next({ path: '/login' })
+    }
   }
+  next()
 })
 
 sync(store, router)
 
 // Start out app!
-// eslint-disable-next-line no-new
-new Vue({
+// eslint-disable-next-line
+var vm = new Vue({
   el: '#root',
   router: router,
   store: store,
@@ -61,12 +58,4 @@ new Vue({
 })
 
 // Check local storage to handle refreshes
-if (window.localStorage) {
-  var localUserString = window.localStorage.getItem('user') || 'null'
-  var localUser = JSON.parse(localUserString)
-
-  if (localUser && store.state.user !== localUser) {
-    store.commit('SET_USER', localUser)
-    store.commit('SET_TOKEN', window.localStorage.getItem('token'))
-  }
-}
+store.dispatch('CHECK_CREDENTIALS')

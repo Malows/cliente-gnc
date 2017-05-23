@@ -26,43 +26,43 @@ const routes = [
         path: 'usuarios',
         component: Usuarios,
         name: 'Usuarios',
-        meta: {description: 'Administración general de usuarios'}
+        meta: { description: 'Administración general de usuarios', requireAuth: true }
       }, {
         path: 'dashboard',
         alias: '',
         component: DashboardView,
         name: 'Dashboard',
-        meta: {description: 'Overview of environment'}
+        meta: { description: 'Overview of environment', requireAuth: true }
       }, {
         path: 'tables',
         component: TablesView,
         name: 'Tables',
-        meta: {description: 'Simple and advance table in CoPilot'}
+        meta: { description: 'Simple and advance table in CoPilot', requireAuth: true }
       }, {
         path: 'tasks',
         component: TasksView,
         name: 'Tasks',
-        meta: {description: 'Tasks page in the form of a timeline'}
+        meta: { description: 'Tasks page in the form of a timeline', requireAuth: true }
       }, {
         path: 'setting',
         component: SettingView,
         name: 'Settings',
-        meta: {description: 'User settings page'}
+        meta: { description: 'User settings page', requireAuth: true }
       }, {
         path: 'access',
         component: AccessView,
         name: 'Access',
-        meta: {description: 'Example of using maps'}
+        meta: { description: 'Example of using maps', requireAuth: true }
       }, {
         path: 'server',
         component: ServerView,
         name: 'Servers',
-        meta: {description: 'List of our servers'}
+        meta: { description: 'List of our servers', requireAuth: true }
       }, {
         path: 'repos',
         component: ReposView,
         name: 'Repository',
-        meta: {description: 'List of popular javascript repos'}
+        meta: { description: 'List of popular javascript repos', requireAuth: true }
       }
     ]
   }, {

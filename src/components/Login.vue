@@ -92,16 +92,12 @@ export default {
             // Chequeo si esta habilitada la cuenta
             if (!data.user.habilitado) {
               this.response = 'Su cuenta se encuentra actualmente deshabilitada, consulte con un administrador.'
-              this.$store.commit('SET_USER', null)
-              this.$store.commit('SET_TOKEN', null)
-              window.localStorage.removeItem('user')
-              window.localStorage.removeItem('token')
-              window.localStorage.removeItem('authTokens')
+              this.$store.dispatch('LOGOUT_USER')
               return
             }
             var token = `${data.tokens.token_type} ${data.tokens.access_token}`
 
-            this.$store.commit('SET_USER', data.user)
+            this.$store.dispatch('SET_USER', data.user)
             this.$store.commit('SET_TOKEN', token)
 
             if (window.localStorage) {
@@ -123,7 +119,7 @@ export default {
       })
     },
     toggleLoading () {
-      this.loading = (this.loading === '') ? 'loading' : ''
+      this.loading = (this.loading === '') ? 'cargando...' : ''
     },
     resetResponse () {
       this.response = ''

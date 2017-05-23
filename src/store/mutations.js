@@ -6,9 +6,14 @@ export default {
     state.searching = (state.searching === '') ? 'loading' : ''
   },
   SET_USER (state, user) {
+    console.log('paso por el mutator')
     state.user = user
   },
   SET_TOKEN (state, token) {
     state.token = token
+  },
+  LOGOUT_USER (state) {
+    state.token = null
+    state.user = null
   }
 }
