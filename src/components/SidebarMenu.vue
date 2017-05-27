@@ -2,22 +2,22 @@
   <ul class="sidebar-menu">
     <li class="header">CLIENTES</li>
     <li class="pageLink" :class="[{ active: inCurrentRoute('Clientes') }]">
-      <a href="#">
+      <router-link to="clientes">
         <i class="fa fa-users fa-lg"></i>
         <span class="page"> Clientes</span>
-      </a>
+      </router-link>
     </li>
     <li class="pageLink" :class="[{ active: inCurrentRoute('Vehiculos') }]">
-      <a href="#">
+      <router-link to="vehiculos">
         <i class="fa fa-car fa-lg"></i>
         <span class="page"> Vehículos</span>
-      </a>
+      </router-link>
     </li>
     <li class="pageLink" :class="[{ active: inCurrentRoute('Cilindros') }]">
-      <a href="#">
+      <router-link to="cilindros">
         <i class="fa fa-circle-o fa-lg"></i>
         <span class ="page">Cilíndros</span>
-      </a>
+      </router-link>
     </li>
 
     <li class="treeview" v-if="tipo_de_usuario <= 5" :class="[{ active: inCurrentRoute(['Trabajos de taller','Servicios de taller'])}]">
@@ -91,7 +91,7 @@
             <span class="page"> Marcas de cilindros</span>
           </a>
         </li>
-        <li :class="[{ active: inCurrentRoute('Registros disponibles')}]">
+        <li :class="[{ active: inCurrentRoute('Registros disponibles')}]" v-if="tipo_de_usuario <= 4">
           <a href="#">
             <i class="fa fa-book fa-lg"></i>
             <span class="page"> Registros disponibles</span>
@@ -124,40 +124,40 @@
           </router-link>
         </li>
         <li :class="[{active: inCurrentRoute('Tipos de usuarios')}]">
-          <a href="#">
+          <router-link to="tipos_de_usuarios">
             <i class="fa fa-users fa-lg"></i>
             <span class="page"> Tipos de usuarios</span>
-          </a>
+          </router-link>
         </li>
         <li :class="[{active: inCurrentRoute('Tickets')}]">
-          <a href="#">
+          <router-link to="tickets">
             <i class="fa fa-ticket fa-lg"></i>
             <span class="page"> Tickets</span>
-          </a>
+          </router-link>
         </li>
       </ul>
     </li>
     <li class="header">TOOLS</li>
     <li class="pageLink" :class="[{ active: inCurrentRoute('Dashboard') }]">
-      <router-link to="/"><i class="fa fa-desktop"></i>
+      <router-link to=""><i class="fa fa-desktop"></i>
         <span class="page">Dashboard</span>
       </router-link>
     </li>
     <li class="pageLink" :class="[{ active: inCurrentRoute('Tables') }]">
-      <router-link to="/tables"><i class="fa fa-table"></i>
+      <router-link to="tables"><i class="fa fa-table"></i>
         <span class="page">Tables</span>
       </router-link>
     </li>
 
     <li class="header">ME</li>
     <li class="pageLink">
-      <router-link to="/tasks">
+      <router-link to="tasks">
         <i class="fa fa-tasks"></i>
         <span class="page">Tasks</span>
       </router-link>
     </li>
     <li class="pageLink">
-      <router-link to="/setting">
+      <router-link to="setting">
         <i class="fa fa-cog"></i>
         <span class="page">Settings</span>
       </router-link>
@@ -165,18 +165,18 @@
 
     <li class="header">LOGS</li>
     <li class="pageLink">
-      <router-link to="/access"><i class="fa fa-book"></i>
+      <router-link to="access"><i class="fa fa-book"></i>
         <span class="page">Access</span>
       </router-link>
     </li>
     <li class="pageLink">
-      <router-link to="/server"><i class="fa fa-hdd-o"></i>
+      <router-link to="server"><i class="fa fa-hdd-o"></i>
         <span class="page">Server</span>
       </router-link>
     </li>
 
     <li class="pageLink">
-      <router-link to="/repos"><i class="fa fa-heart"></i>
+      <router-link to="repos"><i class="fa fa-heart"></i>
         <span class="page">Repos</span>
         <small class="label pull-right bg-green">AJAX</small>
       </router-link>
@@ -184,13 +184,13 @@
 
     <li class="header">PAGES</li>
     <li class="pageLink">
-      <router-link to="/login">
+      <router-link to="login">
         <i class="fa fa-circle-o text-yellow"></i>
         <span class="page"> Login</span>
       </router-link>
     </li>
     <li class="pageLink">
-      <router-link to="/404"><i class="fa fa-circle-o text-red"></i>
+      <router-link to="404"><i class="fa fa-circle-o text-red"></i>
         <span class="page"> 404</span>
       </router-link>
     </li>

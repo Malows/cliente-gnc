@@ -39,8 +39,13 @@ var router = new VueRouter({
 router.beforeEach((to, from, next) => {
   // window.console.log('Transition', transition)
   if (to.meta.requireAuth) {
-    if (window.localStorage.getItem('user') === null || window.localStorage.getItem('token') === null) {
+    let localUser = JSON.parse(window.localStorage.getItem('user')) || null
+    let localToken = window.localStorage.getItem('token') || null
+    if (localUser === null || localToken === null) {
       next({ path: '/login' })
+    }
+    if (to.meta.authorizationLevel < localUser.tipo_usuario_id) {
+      next({ path: '/404' })
     }
   }
   next()
@@ -54,8 +59,11 @@ var vm = new Vue({
   el: '#root',
   router: router,
   store: store,
-  render: h => h(AppView)
+  render: h => h(AppView),
+  mounted () {
+    console.log('se montó el vm')
+    this.$store.dispatch('CHECK_CREDENTIALS')
+  }
 })
 
 // Check local storage to handle refreshes
-store.dispatch('CHECK_CREDENTIALS')

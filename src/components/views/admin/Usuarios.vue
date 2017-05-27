@@ -27,9 +27,7 @@
           :css="css"
           :per-page="20"
           pagination-path=""
-          @vuetable:pagination-data="onPaginationData"
-          >
-        </vuetable>
+          @vuetable:pagination-data="onPaginationData" />
         <div class="row">
           <vuetable-pagination-info
             ref="paginationInfo"

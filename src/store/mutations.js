@@ -6,7 +6,7 @@ export default {
     state.searching = (state.searching === '') ? 'loading' : ''
   },
   SET_USER (state, user) {
-    console.log('paso por el mutator')
+    console.log('paso por el mutator', JSON.stringify(user))
     state.user = user
   },
   SET_TOKEN (state, token) {

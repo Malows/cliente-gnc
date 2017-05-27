@@ -11,7 +11,7 @@
           <div class="col-md-4">
             <vuetable-pagination-info
               ref="paginationInfoTop"
-              info-template="Mostrando del {from} al {to} de {total} clientes"/>
+              info-template="Mostrando del {from} al {to} de {total} vehículos"/>
           </div>
           <div class="col-md-4 col-md-offset-4">
             <vuetable-pagination
@@ -28,14 +28,14 @@
           :per-page="20"
           pagination-path=""
           @vuetable:pagination-data="onPaginationData" />
-        <div class="row">
+        <div class="row text-center">
           <vuetable-pagination-info
             ref="paginationInfo"
+            info-template="Mostrando del {from} al {to} de {total} vehículos"
             info-class="pull-left" />
           <vuetable-pagination
             ref="pagination"
             :css="cssPagination"
-            info-template="Mostrando del {from} al {to} de {total} clientes"
             @vuetable-pagination:change-page="onChangePage" />
         </div>
       </div>

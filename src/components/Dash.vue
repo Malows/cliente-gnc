@@ -1,7 +1,7 @@
 <template>
   <div :class="['wrapper', classes]">
     <header class="main-header">
-      <a href="/" class="logo">
+      <router-link to="/" class="logo">
         <!-- mini logo for sidebar mini 40x50 pixels -->
         <span class="logo-mini"><img src="/static/img/copilot-logo-white.svg" alt="Logo" class="img-responsive center-block"></span>
         <!-- logo for regular state and mobile devices -->
@@ -9,7 +9,7 @@
           <img src="/static/img/copilot-logo-white.svg" alt="Logo" class="img-responsive">
           <span>GNC</span>
         </div>
-      </a>
+      </router-link>
 
       <!-- Header Navbar -->
       <nav class="navbar navbar-static-top" role="navigation">
