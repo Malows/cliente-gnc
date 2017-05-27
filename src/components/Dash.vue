@@ -126,29 +126,22 @@
               <ul class="dropdown-menu">
               	<li class="user-header">
               		<img :src="user.avatar" alt="User Image" class="img-circle">
-              		<p>{{ user.name }} <small>Iniciar Sesión Nov. 2012</small></p>
+              		<p>{{ user.name }} <small>Iniciada sesión Nov. 2012</small></p>
               	</li>
               	<li class="user-body">
-              		<div class="col-xs-4 text-center">
-              			<a href="#">Seguidores</a>
+              		<div class="col-xs-6 text-center">
+                    <router-link to="/">Manual</router-link>
               		</div>
-              		<div class="col-xs-4 text-center">
-              			<a href="#">Ventas</a>
-              		</div>
-              		<div class="col-xs-4 text-center">
-              			<a href="#">Amigos</a>
+              		<div class="col-xs-6 text-center">
+                    <router-link to="/tickets">Pide ayuda</router-link>
               		</div>
               	</li>
               	<li class="user-footer">
               		<div class="pull-left">
-              			<a href="http://localhost:8000/settings" class="btn btn-default btn-flat">Perfil</a>
+              			<router-link to="setting" class="btn btn-default btn-flat">Perfil</router-link>
               		</div>
               		<div class="pull-right">
-              			<a href="http://localhost:8000/logout" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="btn btn-default btn-flat">Salir</a>
-              			<form id="logout-form" action="http://localhost:8000/logout" method="POST" style="display: none;">
-              				<input name="_token" value="9xcHP3fo1CeMy8MEnFeeEiQiZHUdTB9LIucTImbk" type="hidden">
-              				<input value="logout" style="display: none;" type="submit">
-              			</form>
+                    <button type="button" class="btn btn-default btn-flat" @click="logout">Salir</button>
               		</div>
               	</li>
               </ul>
@@ -170,7 +163,7 @@
           <small>{{ $route.meta.description }}</small>
         </h1>
         <ol class="breadcrumb">
-          <li><a href="javascript:;"><i class="fa fa-home"></i>Home</a></li>
+          <li><router-link to="/"><i class="fa fa-home"></i>Home</router-link></li>
           <li class="active">{{$route.name}}</li>
         </ol>
       </section>
@@ -222,6 +215,10 @@ export default {
   methods: {
     changeloading () {
       this.$store.commit('TOGGLE_SEARCHING')
+    },
+    logout () {
+      this.$store.dispatch('LOGOUT_USER')
+      this.$router.push('/login')
     }
   }
 }
