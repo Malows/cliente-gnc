@@ -123,6 +123,35 @@
                 <!-- hidden-xs hides the username on small devices so only the image appears. -->
                 <span class="hidden-xs">{{ user.name }}</span>
               </a>
+              <ul class="dropdown-menu">
+              	<li class="user-header">
+              		<img :src="user.avatar" alt="User Image" class="img-circle">
+              		<p>{{ user.name }} <small>Iniciar Sesión Nov. 2012</small></p>
+              	</li>
+              	<li class="user-body">
+              		<div class="col-xs-4 text-center">
+              			<a href="#">Seguidores</a>
+              		</div>
+              		<div class="col-xs-4 text-center">
+              			<a href="#">Ventas</a>
+              		</div>
+              		<div class="col-xs-4 text-center">
+              			<a href="#">Amigos</a>
+              		</div>
+              	</li>
+              	<li class="user-footer">
+              		<div class="pull-left">
+              			<a href="http://localhost:8000/settings" class="btn btn-default btn-flat">Perfil</a>
+              		</div>
+              		<div class="pull-right">
+              			<a href="http://localhost:8000/logout" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="btn btn-default btn-flat">Salir</a>
+              			<form id="logout-form" action="http://localhost:8000/logout" method="POST" style="display: none;">
+              				<input name="_token" value="9xcHP3fo1CeMy8MEnFeeEiQiZHUdTB9LIucTImbk" type="hidden">
+              				<input value="logout" style="display: none;" type="submit">
+              			</form>
+              		</div>
+              	</li>
+              </ul>
             </li>
           </ul>
         </div>
