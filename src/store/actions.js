@@ -1,4 +1,5 @@
 import MD5 from 'crypto-js/md5'
+import moment from 'moment'
 
 export default {
   LOGOUT_USER ({ commit }) {
@@ -6,10 +7,18 @@ export default {
     commit('LOGOUT_USER')
   },
   SET_USER ({ commit }, user) {
-    console.log('paso por el action')
     user.avatar = (user.email)
       ? `https://www.gravatar.com/avatar/${MD5(user.email.trim().toLowerCase())}.jpg`
       : '#'
+    user.fecha_de_licencia = moment(user.fecha_de_licencia.substring(0, 10), 'YYYY-MM-DD')
+    if (user.tipo_usuario_id === 1) {
+      // Maxima fecha en JS
+      user.fecha_de_vencimiento = moment(new Date(8640000000000000))
+    } else {
+      user.fecha_de_vencimiento = moment(user.fecha_de_licencia)
+      user.fecha_de_vencimiento.add(user.duracion_de_licencia, 'd')
+    }
+    console.log(user.fecha_de_vencimiento)
     commit('SET_USER', user)
   },
   CHECK_CREDENTIALS ({ commit, state }) {

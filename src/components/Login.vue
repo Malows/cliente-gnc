@@ -31,6 +31,7 @@
 // import api from '../api'
 import { AUTH_URL, URL, clientId, clientSecret } from '@/env'
 import axios from 'axios'
+import moment from 'moment'
 
 export default {
   name: 'Login',
@@ -65,6 +66,8 @@ export default {
       .then(response => {
         this.toggleLoading()
         data.tokens = response.data
+        data.tokens.created = moment()
+        data.tokens.expire = moment().add(data.tokens.expires_in, 'seconds')
         /* Checking if error object was returned from the server */
         if (data.tokens.error) {
           var errorName = data.tokens.error.name
@@ -86,7 +89,6 @@ export default {
         axios.get(URL + '/api/user', {headers: header})
         .then(response => {
           data.user = response.data
-          console.log(data.user)
           /* Setting user in the state and caching record to the localStorage */
           if (data.user) {
             // Chequeo si esta habilitada la cuenta
@@ -96,7 +98,8 @@ export default {
               return
             }
             var token = `${data.tokens.token_type} ${data.tokens.access_token}`
-
+            data.user.created = data.tokens.created
+            data.user.expire = data.tokens.expire
             this.$store.dispatch('SET_USER', data.user)
             this.$store.commit('SET_TOKEN', token)
 

@@ -5,6 +5,7 @@ import VueRouter from 'vue-router'
 import { sync } from 'vuex-router-sync'
 import routes from './routes'
 import store from './store'
+import moment from 'moment'
 
 // Import Helpers for filters
 import { domain, count, prettyDate, pluralize } from './filters'
@@ -39,16 +40,39 @@ var router = new VueRouter({
 router.beforeEach((to, from, next) => {
   // window.console.log('Transition', transition)
   if (to.meta.requireAuth) {
-    let localUser = JSON.parse(window.localStorage.getItem('user')) || null
-    let localToken = window.localStorage.getItem('token') || null
-    if (localUser === null || localToken === null) {
-      next({ path: '/login' })
+    let user = store.state.user
+    let now = moment()
+    if (user) {
+      if (now.isAfter(user.expire) || !user.habilitado || now.isAfter(user.fecha_de_vencimineto)) {
+        store.dispatch('LOGOUT_USER')
+        next({ path: '/login' })
+      } else if (to.meta.authorizationLevel < user.tipo_usuario_id) {
+        next({ path: '/404' })
+      } else {
+        next()
+      }
+    } else {
+      console.log('USER ES NULL')
+      let localUser = JSON.parse(window.localStorage.getItem('user')) || null
+      let localToken = window.localStorage.getItem('token') || null
+      // Si no existen las credenciales, lo mando a login
+      if (localUser === null || localToken === null) {
+        next({ path: '/login' })
+      } else {
+        store.dispatch('CHECK_CREDENTIALS')
+        if (now.isAfter(localUser.expire) || !localUser.habilitado || now.isAfter(localUser.fecha_de_vencimineto)) {
+          store.dispatch('LOGOUT_USER')
+          next({ path: '/login' })
+        } else if (to.meta.authorizationLevel < localUser.tipo_usuario_id) {
+          next({ path: '/404' })
+        } else {
+          next()
+        }
+      }
     }
-    if (to.meta.authorizationLevel < localUser.tipo_usuario_id) {
-      next({ path: '/404' })
-    }
+  } else {
+    next()
   }
-  next()
 })
 
 sync(store, router)
@@ -60,9 +84,12 @@ var vm = new Vue({
   router: router,
   store: store,
   render: h => h(AppView),
+  created () {
+    console.log('se creó la vm')
+  },
   mounted () {
     console.log('se montó el vm')
-    this.$store.dispatch('CHECK_CREDENTIALS')
+    // this.$store.dispatch('CHECK_CREDENTIALS')
   }
 })
 
