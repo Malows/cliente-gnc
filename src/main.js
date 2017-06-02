@@ -59,7 +59,10 @@ router.beforeEach((to, from, next) => {
       if (localUser === null || localToken === null) {
         next({ path: '/login' })
       } else {
+        // promesa, se va a resolver y refrescar los datos de usuario
         store.dispatch('CHECK_CREDENTIALS')
+        // si no esta habilitado, carga una primera pantalla, a manera de "cache"
+        // pero luego te va a dar login a cualquier otra ruta
         if (now.isAfter(localUser.expire) || !localUser.habilitado || now.isAfter(localUser.fecha_de_vencimineto)) {
           store.dispatch('LOGOUT_USER')
           next({ path: '/login' })
@@ -83,14 +86,7 @@ var vm = new Vue({
   el: '#root',
   router: router,
   store: store,
-  render: h => h(AppView),
-  created () {
-    console.log('se creó la vm')
-  },
-  mounted () {
-    console.log('se montó el vm')
-    // this.$store.dispatch('CHECK_CREDENTIALS')
-  }
+  render: h => h(AppView)
 })
 
 // Check local storage to handle refreshes

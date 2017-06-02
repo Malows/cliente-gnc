@@ -44,10 +44,14 @@
 </template>
 
 <script>
+import Vue from 'vue'
 import Vuetable from 'vuetable-2/src/components/Vuetable'
 import VuetablePagination from 'vuetable-2/src/components/VuetablePagination'
 import VuetablePaginationInfo from 'vuetable-2/src/components/VuetablePaginationInfo'
 
+import ViewEditDelete from '../partials/ViewEditDelete.vue'
+
+Vue.component('view-edit-delete', ViewEditDelete)
 // import config from '@/env.config'
 
 export default {
@@ -95,6 +99,10 @@ export default {
         {
           name: 'gender',
           title: 'Género'
+        },
+        {
+          name: '__component:view-edit-delete',
+          title: 'Opciones'
         }
       ]
     }
