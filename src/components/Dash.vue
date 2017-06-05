@@ -273,4 +273,7 @@ hr.visible-xs-block {
   height: 1px;
   border-color: transparent;
 }
+.dropdown {
+  background-color: #3C8DBC;
+}
 </style>

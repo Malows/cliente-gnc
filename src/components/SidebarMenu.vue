@@ -139,7 +139,7 @@
     </li>
     <li class="header">TOOLS</li>
     <li class="pageLink" :class="[{ active: inCurrentRoute('Dashboard') }]">
-      <router-link to=""><i class="fa fa-desktop"></i>
+      <router-link to="/"><i class="fa fa-desktop"></i>
         <span class="page">Dashboard</span>
       </router-link>
     </li>

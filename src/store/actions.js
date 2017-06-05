@@ -44,6 +44,11 @@ export default {
           commit('SET_TOKEN', token)
         }
       })
+      .catch((err) => {
+        if (err.message === 'Network Error') {
+          console.error('Revise su conexión de internet, si el error persiste, consulte a los administradores del sistema')
+        }
+      })
     }
   }
 }
