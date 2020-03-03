@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "admin-lte": "^2.3.11",
-    "axios": "^0.15.3",
+    "axios": "^0.18.1",
     "babel-runtime": "^5.8.0",
     "bootstrap": "^3.3.7",
     "bootstrap-vue": "^0.16.1",
