@@ -21,7 +21,7 @@
     "bootstrap-vue": "^2.5.0",
     "chart.js": "2.9.3",
     "crypto-js": "^4.0.0",
-    "datatables.net": "^1.10.11",
+    "datatables.net": "^1.10.22",
     "datatables.net-bs": "^1.10.11",
     "faker": "^4.1.0",
     "font-awesome": "^4.7.0",
